@@ -31,3 +31,5 @@ switch_projects()
 }
 
 echo
+
+# sudo docker build -t build-master .; sudo docker exec -it $(sudo docker run --privileged -d build-master) /bin/bash
