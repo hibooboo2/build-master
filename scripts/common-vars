@@ -27,7 +27,7 @@
 
 : ${CATTLE_UI_URL:="http://cdn.rancher.io/ui/latest/static/index.html"}
  
-declare -A PROJECT_MAP
+declare -a PROJECT_MAP
 
 PROJECT_MAP[CATTLE_REPO]="${CATTLE_REPO}"
 PROJECT_MAP[CATTLE_WORK_DIR]="${CATTLE_WORK_DIR}"

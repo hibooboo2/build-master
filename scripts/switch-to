@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e 
+
+#This script assumes that you have common-vars in the same folder it is run
+#from. Please consult the readme for common-vars.
+
+cd $(dirname $0)/
+
+[[ ! -f ./common-vars ]] && echo Common-vars not found. && exit 9001
+. ./common-vars
+
+[[ -z "${1}" ]] || [[ -z "${2}" ]] && echo Usage: switch-to \${user} \${branch} && exit 1
+echo This will switch all projects to ${1} fork on branch ${2}
+echo Would you like to continue? \(Y/n\)
+read ANSWER
+[[ ${ANSWER} != "Y" ]] && echo Exiting... && exit 1
+
+
+switch_projects()
+{
+    for project in "${BUILD_PROJECTS[@]}"; do
+        echo "Switching... ${project} to ${1} on branch ${2}"
+        cd ${PROJECT_MAP["${project}_WORK_DIR"]}
+        git remote add ${1} git://github.com/${1}/${project}.git
+        git fetch --all 
+        git checkout ${1}/${2} && touch .manual || echo Branch does not exist for ${project} \
+        Skipping....
+        cd ..
+    done
+}
+
+echo
